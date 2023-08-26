@@ -62,7 +62,8 @@ rpm:
     - cronie
     
     # notification daemon
-    - mako
+    #- mako
+    - dunst
 
     # screenshotting
     - grim
