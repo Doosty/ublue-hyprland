@@ -1,4 +1,4 @@
-name: ublueos-hyprland
+name: ublue-hyprland
 base-image: ghcr.io/ublue-os/base-main
 fedora-version: latest
 description: Minimalistic ublue image, featuring Hyprland WM
@@ -155,7 +155,7 @@ firstboot:
     - org.mozilla.firefox
     - org.freedesktop.Platform.ffmpeg-full/x86_64/22.08
     # discord
-    - io.github.spacingbat3.webcord
+    #- io.github.spacingbat3.webcord
     # gaming
-    - com.valvesoftware.Steam
+    #- com.valvesoftware.Steam
     #- org.freedesktop.Platform.VulkanLayer.MangoHud
