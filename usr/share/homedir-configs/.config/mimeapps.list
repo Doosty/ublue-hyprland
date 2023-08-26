@@ -1,0 +1,40 @@
+[Added Associations]
+inode/directory=thunar.desktop;
+image/*=imv-dir.desktop;
+video/*=mpv.desktop;
+audio/*=mpv.desktop;
+text/*=org.xfce.mousepad.desktop;
+text/markdown=org.xfce.mousepad.desktop;
+text/plain=org.xfce.mousepad.desktop;
+application/toml=org.xfce.mousepad.desktop;
+application/yaml=org.xfce.mousepad.desktop;
+application/json=org.xfce.mousepad.desktop;
+application/x-theme=org.xfce.mousepad.desktop;
+application/x-shellscript=org.xfce.mousepad.desktop;
+text/x-chdr=org.xfce.mousepad.desktop;
+text/x-makefile=org.xfce.mousepad.desktop;
+application/octet-stream=org.xfce.mousepad.desktop;
+
+[Default Applications]
+inode/directory=thunar.desktop;
+image/*=imv-dir.desktop
+audio/*=mpv.desktop;
+video/*=mpv.desktop;
+text/*=org.xfce.mousepad.desktop
+x-scheme-handler/discord=io.github.spacingbat3.webcord
+application/pdf=org.mozilla.firefox.desktop
+application/x-extension-htm=org.mozilla.firefox.desktop
+application/x-extension-html=org.mozilla.firefox.desktop
+application/x-extension-shtml=org.mozilla.firefox.desktop
+application/x-extension-xht=org.mozilla.firefox.desktop
+application/x-extension-xhtml=org.mozilla.firefox.desktop
+application/xhtml+xml=org.mozilla.firefox.desktop
+text/html=org.mozilla.firefox.desktop
+x-scheme-handler/about=org.mozilla.firefox.desktop
+x-scheme-handler/ftp=org.mozilla.firefox.desktop
+x-scheme-handler/http=org.mozilla.firefox.desktop
+x-scheme-handler/https=org.mozilla.firefox.desktop
+x-scheme-handler/unknown=org.mozilla.firefox.desktop
+application/octet-stream=org.xfce.mousepad.desktop
+
+[Removed Associations]

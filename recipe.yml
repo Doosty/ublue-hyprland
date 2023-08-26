@@ -1,91 +1,161 @@
-# This file can only be edited inside the uBlue image's git repository.
-
-# The image will be at "ghcr.io/yourusername/name".
-name: ublue-hyprland
-
-# The native container image to build on top of.
-# Warning: Non-uBlue images might not work properly, due to missing components.
+name: ublueos-hyprland
 base-image: ghcr.io/ublue-os/base-main
-
-# What Fedora version to use. Use an explicit version or `latest`.
-# If you use `latest`, you will be automatically updated to the next major
-# Fedora version, assuming the image you're using as your base container
-# builds with the tag (all uBlue images do this).
-fedora-version: 38
-
-# This description will be visible in the container metadata.
-description: This is my personal OS image, Universal blue featuring Hyprland.
-
-# These scripts will be executed during the container build.
-# Place scripts in the "scripts/" dir and put the corresponding filenames here.
-# Any files that aren't listed here won't be executed automatically, which
-# means that you can place "helper" or "library" scripts in the folder too.
-# You can use "autorun.sh" if you want an automatic runner.
+fedora-version: latest
+description: Minimalistic ublue image, featuring Hyprland WM
 scripts:
-  # "Pre" scripts run very early in the build, immediately after your custom
-  # repos have been imported (so that you can access those repos if necessary).
   pre:
-    # Automatically runs script files within "scripts/pre/".
-    - autorun.sh
-    # Manually listed scripts.
-    # - example_pre.sh
-
-    # "Post" scripts run at the end of the build process.
+    - add-kopia-repo.sh
+    - remove-preinstalled-xwayland.sh
   post:
-    # Automatically runs script files within "scripts/post/".
-    - autorun.sh
-    # Manually listed scripts.
-    # - example_post.sh
-
-    # Custom RPM configuration.
-    # These changes will be integrated into your custom image at the "system level".
+    - fix-tty1.sh
 rpm:
-  # A list of urls of ".repo" files that should be added to your system.
-  # This is the proper way to add custom COPR repos to your image.
-  # Tip: Use `%FEDORA_VERSION%` instead of static Fedora version numbers,
-  # so that your repos automatically use your image's actual Fedora version,
-  # which greatly simplifies future maintenance of your custom recipe.
   repos:
-    # Example (which also demonstrates version number expansion):
-    # - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%FEDORA_VERSION%/atim-starship-fedora-%FEDORA_VERSION%.repo
-
-  # These RPMs will be installed from your enabled repositories (Fedora's own
-  # repos, extra "repos" you've added, etc). The installation is automatically
-  # performed via rpm-ostree during the image build, and will be pre-installed
-  # at the "system level" in the final image.
+  - https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/repo/fedora-%FEDORA_VERSION%/solopasha-hyprland-fedora-%FEDORA_VERSION%.repo
+  - https://copr.fedorainfracloud.org/coprs/varlad/helix/repo/fedora-%FEDORA_VERSION%/varlad-helix-fedora-%FEDORA_VERSION%.repo
+  - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+  - https://copr.fedorainfracloud.org/coprs/dustee071/unstable-apps/repo/fedora-%FEDORA_VERSION%/dustee071-unstable-apps-fedora-%FEDORA_VERSION%.repo
   install:
-    # Needed for yafti (the first boot installer). Remove if you're not using yafti.
+    # desktop environment & dependencies & stuff
+    - hyprland
+    - waybar-hyprland
+    - xdg-desktop-portal-hyprland
+    - libnotify
+    - dbus-tools
+    - qt5-qtwayland
+    - qt6-qtwayland
+    - gtk-murrine-engine
     - python3-pip
-    # GNOME's GTK4 theme, Libadwaita. Already included in Silverblue, but not
-    # other spins. You can remove if you aren't using yafti, but many native
-    # apps and binaries require it, so it's a good idea to always include it
-    # if you ever download or compile any custom software on your machine.
     - libadwaita
-    # Add your own below:
-    # Example:
-    # - tilix
+    - libappindicator-gtk3
+    - wlr-randr
+    #- xorg-x11-server-Xwayland
+    #- hyprpaper
+    #- eww-wayland-git
+    
+    # authentication gui prompt
+    - xfce-polkit
 
-    # These RPMs will be removed from the system image. This step happens during
-    # image build, BEFORE installing custom RPMs (from the "rpm.install" category).
+    # power control gui
+    - wlogout
+
+    # audio control gui
+    - pavucontrol
+
+    # night light
+    - wlsunset
+
+    # theming gui
+    - nwg-look
+    - qt5ct
+    - qt6ct
+
+    # monitor & workspace gui
+    - nwg-displays
+
+    # network gui
+    - network-manager-applet
+
+    # printing gui
+    - system-config-printer
+
+    # cron daemon
+    - cronie
+    
+    # notification daemon
+    - mako
+
+    # screenshotting
+    - grim
+    - slurp
+    # grimblast in usr/bin
+    - swappy
+    - wf-recorder
+
+    # file manager
+    - thunar
+    - thunar-volman
+    - thunar-archive-plugin
+    # xplr in usr/bin
+    - xarchiver
+
+    # text editors
+    - mousepad
+    - helix
+
+    # resource monitor
+    - btop
+
+    # video player
+    - mpv
+    - streamlink
+    - wtwitch
+    - yt-dlp
+
+    # hotkey
+    - keyd
+
+    # image viewer
+    - imv
+
+    # tools & utils
+    - gparted
+    - liveusb-creator
+    - wev
+    # mimeo in usr/bin
+    # handlr in usr/bin
+
+    # clipboard
+    #- copyq
+    # cliphist in usr/bin
+    # wl-clip-persist in usr/bin
+
+    # vpn
+    - tailscale
+
+    # app launcher
+    - wofi
+    - fuzzel
+
+    # terminal
+    - kitty
+    - alacritty
+    - foot
+
+    # shell
+    - zsh
+
+    # virtualization
+    #- virt-install
+    #- virt-manager
+    #- virt-viewer
+    #- libvirt-client
+    #- libvirt-daemon-kvm
+
+    # development
+    #- dotnet-sdk-7.0
+
+    # system info
+    - neofetch
+
+    # backup
+    - kopia
+
+    # fonts
+    - overpass-fonts
+    - overpass-mono-fonts
   remove:
-    # Remove the native firefox (from Fedora) in favor of the Flatpak.
     - firefox
     - firefox-langpacks
-
-# Configuration for the "first boot" experience, which is available after login.
 firstboot:
-  # Whether to embed "yafti" into the OS image and configure it to autostart,
-  # which is the preferred uBlue "first boot" GUI. Set this to "false" if you've
-  # decided to use a different solution instead.
-  yafti: true
-
-  # These Flatpaks will be suggested for install after user login, via the yafti
-  # "first boot" GUI. Everything below will be merged into the "yafti.yml" config
-  # on build, in a category named "Custom". If you prefer, you can instead remove
-  # everything below and directly edit "yafti.yml" to have more control.
-  # Alternatively, if you've disabled "yafti", you can still install these via
-  # the "just setup-flatpaks" command from our "custom.just" template file.
-  # This is just an example selection:
+  yafti: false
   flatpaks:
-    - io.github.celluloid_player.Celluloid
-    - org.kde.krita
+    # permission editor for flatpaks
+    - com.github.tchx84.Flatseal
+    # firefox & codecs
+    - org.mozilla.firefox
+    - org.freedesktop.Platform.ffmpeg-full/x86_64/22.08
+    # discord
+    - io.github.spacingbat3.webcord
+    # gaming
+    - com.valvesoftware.Steam
+    #- org.freedesktop.Platform.VulkanLayer.MangoHud

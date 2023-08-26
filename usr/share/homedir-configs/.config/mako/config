@@ -1,0 +1,30 @@
+output=DP-1
+default-timeout=4000
+ignore-timeout=true
+actions=true
+format=<b>%s</b>\n%b
+font=monospace 11
+max-visible=5
+sort=-time
+layer=top
+anchor=bottom-right
+width=400
+height=150
+margin=25
+padding=5
+border-size=2
+border-radius=3
+icons=true
+max-icon-size=64
+markup=true
+on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
+
+
+# Catpucin theming
+background-color=#24273a
+text-color=#cad3f5
+border-color=#8aadf4
+progress-color=over #363a4f
+[urgency=high]
+border-color=#f5a97f
+
